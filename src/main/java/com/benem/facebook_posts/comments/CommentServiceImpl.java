@@ -14,32 +14,21 @@ public class CommentServiceImpl implements CommentService{
     private CommentRepository commentRepository;
 
     @Autowired
-    private PostService postService;
-
-    @Autowired
     private UserService userService;
 
     @Override
-    public Comment writeCommentToPost(Comment comment, String postId, String authorId) {
-
-        var post = postService.findPostById(postId);
-        var author = userService.findUserById(authorId);
-
-        comment.setAuthor(author);
-        comment.setPost(post);
-
-        return commentRepository.save(comment);
-    }
-
-    @Override
-    public Comment writeCommentToComment(Comment comment, String parentId, String authorId) {
+    public Comment addComment(Comment comment, String parentId, String authorId) {
         var parentComment = findCommentById(parentId);
         var author = userService.findUserById(authorId);
 
         comment.setParent(parentComment);
         comment.setAuthor(author);
 
-        return commentRepository.save(comment);
+        parentComment.addComment(comment);
+
+        commentRepository.save(parentComment);
+
+        return comment;
     }
 
     @Override
