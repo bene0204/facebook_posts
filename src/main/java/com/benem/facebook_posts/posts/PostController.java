@@ -12,13 +12,14 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PostMapping("/posts")
-    public Post writePost(@RequestBody Post post, @RequestParam("authorId") String authorId) {
-        return postService.writePost(post,authorId);
+    @PostMapping("/posts/{id}/comment")
+    public Comment addComment(@PathVariable("id") String postId, @RequestBody Comment comment, @RequestParam("userId") String userId){
+        return postService.addComment(postId,comment, userId);
     }
 
     @GetMapping("/posts/{id}/comments")
     public List<Comment> getCommentsByPost(@PathVariable("id") String postId){
         return postService.getCommentsByPost(postId);
     }
+
 }

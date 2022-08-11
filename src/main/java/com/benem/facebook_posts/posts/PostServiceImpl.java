@@ -18,20 +18,25 @@ public class PostServiceImpl implements PostService{
     private UserService userService;
 
     @Override
-    public Post writePost(Post post,String authorId) {
-
-        var user = userService.findUserById(authorId);
-
-        post.setAuthor(user);
-
-       return postRepository.save(post);
-    }
-
-    @Override
     public List<Comment> getCommentsByPost(String postId) {
         var post = findPostById(postId);
 
         return post.getComments();
+    }
+
+    @Override
+    public Comment addComment(String postId, Comment comment, String userId) {
+        var post = findPostById(postId);
+        var user = userService.findUserById(userId);
+
+        comment.setPost(post);
+        comment.setAuthor(user);
+
+        post.addComment(comment);
+
+        postRepository.save(post);
+
+        return comment;
     }
 
     @Override
