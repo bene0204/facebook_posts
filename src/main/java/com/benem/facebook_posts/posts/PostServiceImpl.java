@@ -25,7 +25,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Comment addComment(String postId, Comment comment, String userId) {
+    public List<Comment> addComment(String postId, Comment comment, String userId) {
         var post = findPostById(postId);
         var user = userService.findUserById(userId);
 
@@ -36,7 +36,7 @@ public class PostServiceImpl implements PostService{
 
         postRepository.save(post);
 
-        return comment;
+        return post.getComments();
     }
 
     @Override

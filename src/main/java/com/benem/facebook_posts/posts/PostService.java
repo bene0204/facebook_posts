@@ -10,5 +10,5 @@ public interface PostService {
 
     List<Comment> getCommentsByPost(String postId);
 
-    Comment addComment(String postId, Comment comment, String userId);
+    List<Comment> addComment(String postId, Comment comment, String userId);
 }

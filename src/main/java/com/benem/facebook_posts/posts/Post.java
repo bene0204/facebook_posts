@@ -35,8 +35,8 @@ public class Post {
 
     private Date createdAt = new Date();
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "author_id", referencedColumnName = "userId",nullable = false)
     private User author;
 

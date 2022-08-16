@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class PostController {
 
@@ -13,7 +14,7 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/posts/{id}/comment")
-    public Comment addComment(@PathVariable("id") String postId, @RequestBody Comment comment, @RequestParam("userId") String userId){
+    public List<Comment> addComment(@PathVariable("id") String postId, @RequestBody Comment comment, @RequestParam("userId") String userId){
         return postService.addComment(postId,comment, userId);
     }
 

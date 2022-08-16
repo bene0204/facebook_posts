@@ -17,7 +17,7 @@ public class CommentServiceImpl implements CommentService{
     private UserService userService;
 
     @Override
-    public Comment addComment(Comment comment, String parentId, String authorId) {
+    public List<Comment> addComment(Comment comment, String parentId, String authorId) {
         var parentComment = findCommentById(parentId);
         var author = userService.findUserById(authorId);
 
@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService{
 
         commentRepository.save(parentComment);
 
-        return comment;
+        return parentComment.getChildren();
     }
 
     @Override

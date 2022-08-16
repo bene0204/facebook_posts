@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    Comment addComment(Comment comment, String parentId, String authorId);
+    List<Comment> addComment(Comment comment, String parentId, String authorId);
 
     Comment findCommentById(String id);
 

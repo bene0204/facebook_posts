@@ -31,13 +31,13 @@ public class Comment {
 
     private Date createdAt = new Date();
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "author_id", referencedColumnName = "userId",nullable = false)
     private User author;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id", referencedColumnName = "commentId")
     private Comment parent;
 
@@ -45,8 +45,8 @@ public class Comment {
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> children = new ArrayList<>();
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id", referencedColumnName = "postId")
     private Post post;
 

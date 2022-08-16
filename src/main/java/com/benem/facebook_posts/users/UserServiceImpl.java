@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -81,6 +83,24 @@ public class UserServiceImpl implements UserService{
         return user.getFollowList();
     }
 
+    @Override
+    public List<Post> getFeed(String userId) {
+        var user = findUserById(userId);
+        var follows = user.getFollowList();
+        List<Post> feed = new ArrayList<>();
+
+        for ( User followedUser :  follows) {
+
+            for(Post post : followedUser.getPosts()){
+                if(wasCreatedInGivenRange(post.getCreatedAt(), 3L)){
+                    feed.add(post);
+                }
+            }
+        }
+
+        return feed;
+    }
+
 
     @Override
     public boolean takenUserName(String userName) {
@@ -89,6 +109,27 @@ public class UserServiceImpl implements UserService{
 
     public User findUserById(String id) {
         return userRepository.findById(id).get();
+    }
+
+    @Override
+    public Long getDaysInMilliSec(Long days) {
+        Long MILLISECSINASECOND = 1000L;
+        Long SECONDSINAMINUTE = 60L;
+        Long MINUTESINANHOUR = 60L;
+        Long HOURSINADAY = 24L;
+
+        return MILLISECSINASECOND * SECONDSINAMINUTE * MINUTESINANHOUR * HOURSINADAY * days;
+    }
+
+    @Override
+    public boolean wasCreatedInGivenRange(Date createdAt, Long days) {
+        Long daysInMilliSec = getDaysInMilliSec(days);
+
+        Long timeStamp = new Date().getTime() - daysInMilliSec;
+
+        Date dateOfEndRange = new Date(timeStamp);
+
+        return !createdAt.before(dateOfEndRange);
     }
 
 
