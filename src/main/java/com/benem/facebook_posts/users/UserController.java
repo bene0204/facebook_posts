@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class UserController {
 
@@ -50,4 +51,8 @@ public class UserController {
         return userService.getFollowList(userId);
     }
 
+    @GetMapping("/users/{id}/feed")
+    public List<Post> getFeed(@PathVariable("id") String userId){
+        return userService.getFeed(userId);
+    }
 }
