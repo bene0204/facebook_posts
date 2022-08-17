@@ -26,8 +26,13 @@ public class UserController {
     }
 
     @PostMapping("/users/{id}/post")
-    public Post addPost(@PathVariable("id") String userId, @RequestBody Post post) {
+    public List<Post> addPost(@PathVariable("id") String userId, @RequestBody Post post) {
         return userService.addPost(userId, post);
+    }
+
+    @GetMapping("/users/{id}")
+    public User getProfile(@PathVariable("id") String userId){
+        return userService.getProfile(userId);
     }
 
 

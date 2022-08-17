@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Post addPost(String userId, Post post) {
+    public List<Post> addPost(String userId, Post post) {
         var user = findUserById(userId);
 
         post.setAuthor(user);
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService{
 
         userRepository.save(user);
 
-        return post;
+        return user.getPosts();
     }
 
     @Override
@@ -99,6 +99,11 @@ public class UserServiceImpl implements UserService{
         }
 
         return feed;
+    }
+
+    @Override
+    public User getProfile(String userId) {
+        return findUserById(userId);
     }
 
 
