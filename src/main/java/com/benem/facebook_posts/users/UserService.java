@@ -24,11 +24,13 @@ public interface UserService {
     List<Comment> getCommentsByUser(String userId);
 
 
-    Post addPost(String userId, Post post);
+    List<Post> addPost(String userId, Post post);
 
     String followSomeOne(String userId, String followedId);
 
     List<User> getFollowList(String userId);
 
     List<Post> getFeed(String userId);
+
+    User getProfile(String userId);
 }
